@@ -8,6 +8,7 @@ Google Cloud App Dev PSO - App Engine Standard Python
 ```
   git config --global user.email "you@example.com"
   git config --global user.name "Your Name"
+  git remote add upstream https://github.com/joseret/pso-appdev-appengine-std-python
 ```
 
 ```
