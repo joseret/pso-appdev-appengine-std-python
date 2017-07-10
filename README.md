@@ -4,6 +4,11 @@ Google Cloud App Dev PSO - App Engine Standard Python
 
 # Setup
 
+## initialize API
+```
+gcloud service-management enable appengine.googleapis.com
+gcloud service-management enable compute-component.googleapis.com
+```
 ## git
 ```
   git config --global user.email "you@example.com"
