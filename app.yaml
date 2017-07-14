@@ -6,5 +6,10 @@ handlers:
 - url: /static/(.*)
   static_files: static/app/\1
   upload: static/app/(.*)
+
+- url: /images/(.*)
+  static_files: static/app/images/\1
+  upload: static/app/images/(.*)
+
 - url: /.*
   script: main.app
