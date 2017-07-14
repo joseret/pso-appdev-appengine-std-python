@@ -29,4 +29,15 @@ gcloud compute --project "pso-appdev-gnp-mex" instances create "pso-appdev-appen
 gcloud app deploy app.yaml
 ```
 
-hello
+
+# References
+
+https://cs.corp.google.com/piper///depot/google3/experimental/gtech_pssk/crono
+https://firebase.google.com/docs/web/setup
+https://firebase.google.com/docs/auth/web/start#sign_up_new_users
+https://firebase.google.com/docs/auth/web/anonymous-auth
+http://google-auth.readthedocs.io/en/latest/
+https://cloud.google.com/appengine/docs/standard/python/authenticating-users-firebase-appengine
+
+https://www.spinnaker.io/guides/tutorials/codelabs/appengine-source-to-prod/
+https://github.com/roike/SpaTemplate
