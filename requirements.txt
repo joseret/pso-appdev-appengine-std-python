@@ -1,0 +1,7 @@
+google-auth
+requests
+requests-toolbelt
+pyopenssl
+ndg-httpsclient
+pyasn1
+pillow

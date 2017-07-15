@@ -29,6 +29,18 @@ gcloud compute --project "pso-appdev-gnp-mex" instances create "pso-appdev-appen
 gcloud app deploy app.yaml
 ```
 
+## Add Libraries
+```commandline
+https://askubuntu.com/questions/244641/how-to-set-up-and-use-a-virtual-python-environment-in-ubuntu
+```
+
+```commandline
+apt-get install libffi-dev libssl-dev
+```
+
+```commandline
+pip install -r requirements -t lib
+```
 
 # References
 
