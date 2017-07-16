@@ -39,7 +39,7 @@ apt-get install libffi-dev libssl-dev
 ```
 
 ```commandline
-pip install -r requirements -t lib
+pip install --user -r requirements -t lib
 ```
 
 # References
@@ -50,6 +50,8 @@ https://firebase.google.com/docs/auth/web/start#sign_up_new_users
 https://firebase.google.com/docs/auth/web/anonymous-auth
 http://google-auth.readthedocs.io/en/latest/
 https://cloud.google.com/appengine/docs/standard/python/authenticating-users-firebase-appengine
+https://firebase.google.com/docs/auth/admin/verify-id-tokens#verify_id_tokens_using_the_firebase_admin_sdk
+
 
 https://www.spinnaker.io/guides/tutorials/codelabs/appengine-source-to-prod/
 https://github.com/roike/SpaTemplate

@@ -38,6 +38,23 @@ import requests_toolbelt.adapters.appengine
 requests_toolbelt.adapters.appengine.monkeypatch()
 HTTP_REQUEST = google.auth.transport.requests.Request()
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import auth as firebase_auth
+
+default_app = None
+if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
+  # Production, no need to alter anything
+  default_app = firebase_admin.initialize_app()
+  pass
+else:
+  # Local development server
+  cred = credentials.Certificate('localonly/pso-appdev-gnp-mex-firebase-adminsdk-fhph7-a3ddb7abd2.json')
+  firebase_admin.initialize_app(cred)
+# Initialize the app with a service account, granting admin privileges
+
+
+
 def getAuthHeader(key, headers):
     print 'getAuthHeader', headers.items()
     try:
@@ -62,15 +79,20 @@ class PrivatePage(webapp2.RequestHandler):
             id_token = value.split(' ').pop()
             print 'id_token', id_token
             claims = google.oauth2.id_token.verify_firebase_token(id_token, HTTP_REQUEST)
+
             if not claims:
                 self.response.status = '401 - Unauthorized'
+                return
+            decoded_token = firebase_auth.verify_id_token(id_token)
+            if not decoded_token:
+                self.response.status = '401 - Unauthorized - Firebase'
                 return
         else:
             self.response.status = '401 - Unauthorized Missing Header'
             return
 
         print 'claims', claims
-
+        print 'decoded_token', decoded_token
         self.response.headers['Content-Type'] = 'text/html'
         self.response.write('<body style=\'background-color: orange\'>Hola, x!</body>')
 
