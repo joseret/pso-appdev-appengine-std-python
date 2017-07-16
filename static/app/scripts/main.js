@@ -7,10 +7,11 @@
 'use strict';
 
 // Initializes FriendlyChat.
-function FriendlyChat() {
-    this.checkSetup();
+function FriendlyChat() {this.checkSetup();
+
   // Shortcuts to DOM Elements.
   this.userIdToken = '';
+  this.userInfo = {}
   this.messageList = document.getElementById('messages');
   this.messageForm = document.getElementById('message-form');
   this.messageInput = document.getElementById('message');
@@ -27,7 +28,7 @@ function FriendlyChat() {
   // Saves message on form submit.
   // this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
-  this.signInButton.addEventListener('click', this.signIn.bind(this));
+  this.signInButton.addEventListener('click', this.signInWithPopup.bind(this));
   this.pingPrivate.addEventListener('click', this.pingPrivateAction.bind(this));
   // Toggle for the button.
   var buttonTogglingHandler = this.toggleButton.bind(this);
@@ -42,6 +43,19 @@ function FriendlyChat() {
  // this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
   this.initFirebase();
 }
+
+
+FriendlyChat.prototype.signInWithPopup = function() {
+  window.open(this.getWidgetUrl(), 'Sign In', 'width=985,height=735');
+};
+
+
+/**
+ * @return {string} The URL of the FirebaseUI standalone widget.
+ */
+FriendlyChat.prototype.getWidgetUrl = function()  {
+  return 'widget.html';
+};
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
 FriendlyChat.prototype.initFirebase = function() {
@@ -86,6 +100,7 @@ FriendlyChat.prototype.onAuthStateChanged = function(user) {
     // this.saveMessagingDeviceToken();
   } else { // User is signed out!
     // Hide user's profile and sign-out button.
+    this.idUserToken = null;
     this.userName.setAttribute('hidden', 'true');
     this.userPic.setAttribute('hidden', 'true');
     this.signOutButton.setAttribute('hidden', 'true');
@@ -105,13 +120,13 @@ FriendlyChat.prototype.checkSetup = function() {
   }
 };
 
-// Signs-in Friendly Chat.
-FriendlyChat.prototype.signIn = function() {
-  // Sign in Firebase using popup auth and Google as the identity provider.
-    console.log('signIn');
-  var provider = new firebase.auth.GoogleAuthProvider();
-  this.auth.signInWithPopup(provider);
-};
+// // Signs-in Friendly Chat.
+// FriendlyChat.prototype.signIn = function() {
+//   // Sign in Firebase using popup auth and Google as the identity provider.
+//   console.log('signIn');
+//   var provider = new firebase.auth.GoogleAuthProvider();
+//   this.auth.signInWithPopup(provider);
+// };
 
 // Signs-out of Friendly Chat.
 FriendlyChat.prototype.signOut = function() {
@@ -121,10 +136,10 @@ FriendlyChat.prototype.signOut = function() {
 
 // Returns true if user is signed-in. Otherwise false and displays a message.
 FriendlyChat.prototype.checkSignedInWithMessage = function() {
-    // Return true if the user is signed in Firebase
-    if (this.auth.currentUser) {
-        return true;
-    }
+  // Return true if the user is signed in Firebase
+  if (this.auth.currentUser) {
+    return true;
+  }
 };
 
 // Enables or disables the submit button depending on the values of the input
@@ -147,7 +162,7 @@ FriendlyChat.prototype.pingPrivateAction = function() {
       'Authorization': 'Bearer ' + userIdToken
     }
   });
-}
+};
 
 $(function(){
   window.friendlyChat = new FriendlyChat();
