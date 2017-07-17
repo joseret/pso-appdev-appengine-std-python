@@ -6,3 +6,4 @@ ndg-httpsclient
 pyasn1
 pillow
 firebase-admin
+google-api-python-client

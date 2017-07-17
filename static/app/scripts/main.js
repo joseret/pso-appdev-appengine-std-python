@@ -7,8 +7,9 @@
 'use strict';
 
 // Initializes FriendlyChat.
-function FriendlyChat() {this.checkSetup();
+function FriendlyChat() {
 
+  this.checkSetup();
   // Shortcuts to DOM Elements.
   this.userIdToken = '';
   this.userInfo = {}
@@ -54,7 +55,7 @@ FriendlyChat.prototype.signInWithPopup = function() {
  * @return {string} The URL of the FirebaseUI standalone widget.
  */
 FriendlyChat.prototype.getWidgetUrl = function()  {
-  return 'widget.html';
+  return '/static/widget.html';
 };
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -155,12 +156,18 @@ FriendlyChat.prototype.toggleButton = function() {
 FriendlyChat.prototype.pingPrivateAction = function() {
     var userIdToken = this.userIdToken;
     console.log('pingPrivateAction', userIdToken);
-    $.ajax('/private', {
+    $.ajax('/rest/customer', {
     /* Set header for the XMLHttpRequest to get data from the web server
     associated with userIdToken */
     headers: {
       'Authorization': 'Bearer ' + userIdToken
-    }
+    },
+    'data': JSON.stringify({'prop': 'value'}),
+    'type': 'post',
+    'dataType': 'json',
+    'success': function(json_data) {
+      console.log('JSON-Success', json_data)
+    },
   });
 };
 
